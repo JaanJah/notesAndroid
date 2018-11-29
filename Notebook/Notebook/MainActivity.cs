@@ -25,7 +25,7 @@ namespace Notebook
             databaseService.CreateDatabase();
             databaseService.CreateTableWithData(note);
             var notes = databaseService.GetAllNotes();
-
+            databaseService.GetAllNotes();
             submitBtn.Click += delegate
             {
                 note = inputText.Text;
@@ -34,6 +34,7 @@ namespace Notebook
                 notes = databaseService.GetAllNotes();
                 list.Adapter = new CustomAdapter(this, notes.ToList());
             };
+            list.Adapter = new CustomAdapter(this, notes.ToList());
         }
     }
 }

@@ -106,9 +106,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\editImage.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\deleteImage.png" />
   </ItemGroup>
   <ItemGroup>

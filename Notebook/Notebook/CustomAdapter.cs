@@ -17,6 +17,8 @@ namespace Notebook
     {
         List<Notes> items;
         Activity context;
+        ImageButton editBtn;
+        ImageButton deleteBtn;
 
         public CustomAdapter(Activity context, List<Notes> items) : base()
         {
@@ -49,10 +51,32 @@ namespace Notebook
             View view = convertView;
             if (view == null)
                 view = context.LayoutInflater.Inflate(Resource.Layout.CustomRow, null);
-
             view.FindViewById<TextView>(Resource.Id.noteMessage).Text = items[position].Note;
 
+            editBtn = view.FindViewById<ImageButton>(Resource.Id.editBtn);
+            editBtn.Tag = position;
+            editBtn.Click += EditBtn_Click;
+
+            deleteBtn = view.FindViewById<ImageButton>(Resource.Id.deleteBtn);
+            deleteBtn.Tag = position;
+            deleteBtn.Click += DeleteBtn_Click;
+
             return view;
+        }
+
+        private void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            var deleteBtnClicked = (ImageButton)sender;
+            int position = (int)deleteBtnClicked.Tag;
+            var dbService = new DatabaseService();
+            dbService.CreateDatabase();
+            dbService.RemoveNote(items[position]);
+            NotifyDataSetChanged();
+        }
+
+        private void EditBtn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

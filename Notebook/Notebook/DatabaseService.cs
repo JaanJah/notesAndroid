@@ -20,7 +20,7 @@ namespace Notebook
 
         public void CreateDatabase()
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notebookdb.db3");
+            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notebookdb1.db3");
             db = new SQLiteConnection(dbPath);
         }
 
@@ -41,6 +41,11 @@ namespace Notebook
             var newNote = new Notes();
             newNote.Note = noteMsg;
             db.Insert(newNote);
+        }
+
+        public void RemoveNote(Notes note)
+        {
+            db.Delete(note);
         }
 
         public TableQuery<Notes> GetAllNotes()
