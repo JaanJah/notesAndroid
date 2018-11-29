@@ -19,11 +19,13 @@ namespace Notebook
         Activity context;
         ImageButton editBtn;
         ImageButton deleteBtn;
+        DatabaseService databaseService;
 
-        public CustomAdapter(Activity context, List<Notes> items) : base()
+        public CustomAdapter(Activity context, List<Notes> items, DatabaseService databaseService) : base()
         {
             this.context = context;
             this.items = items;
+            this.databaseService = databaseService;
         }
 
         public override Notes this[int position]
@@ -68,9 +70,7 @@ namespace Notebook
         {
             var deleteBtnClicked = (ImageButton)sender;
             int position = (int)deleteBtnClicked.Tag;
-            var dbService = new DatabaseService();
-            dbService.CreateDatabase();
-            dbService.RemoveNote(items[position]);
+            databaseService.RemoveNote(items[position]);
             NotifyDataSetChanged();
         }
 

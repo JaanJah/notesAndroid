@@ -32,9 +32,9 @@ namespace Notebook
                 databaseService.AddNote(note);
 
                 notes = databaseService.GetAllNotes();
-                list.Adapter = new CustomAdapter(this, notes.ToList());
+                list.Adapter = new CustomAdapter(this, notes.ToList(), databaseService);
             };
-            list.Adapter = new CustomAdapter(this, notes.ToList());
+            list.Adapter = new CustomAdapter(this, notes.ToList(), databaseService);
         }
     }
 }
