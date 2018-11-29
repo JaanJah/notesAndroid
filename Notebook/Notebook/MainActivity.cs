@@ -11,17 +11,20 @@ namespace Notebook
     {
         EditText inputText;
         string note;
+        ImageButton refreshBtn;
+        ListView list;
+        DatabaseService databaseService;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
 
-            var list = FindViewById<ListView>(Resource.Id.listView1);
+            list = FindViewById<ListView>(Resource.Id.listView1);
             inputText = FindViewById<EditText>(Resource.Id.inputText);
             var submitBtn = FindViewById<Button>(Resource.Id.submitBtn);
-
-            var databaseService = new DatabaseService();
+            refreshBtn = FindViewById<ImageButton>(Resource.Id.refreshBtn);
+            databaseService = new DatabaseService();
             databaseService.CreateDatabase();
             databaseService.CreateTableWithData(note);
             var notes = databaseService.GetAllNotes();
@@ -32,9 +35,17 @@ namespace Notebook
                 databaseService.AddNote(note);
 
                 notes = databaseService.GetAllNotes();
-                list.Adapter = new CustomAdapter(this, notes.ToList(), databaseService);
+                list.Adapter = new CustomAdapter(this, notes.ToList());
             };
-            list.Adapter = new CustomAdapter(this, notes.ToList(), databaseService);
+            refreshBtn.Click += RefreshBtn_Click;
+            list.Adapter = new CustomAdapter(this, notes.ToList());
+        }
+
+        private void RefreshBtn_Click(object sender, System.EventArgs e)
+        {
+            var listAdapter = new CustomAdapter(this, databaseService.GetAllNotes().ToList());
+            list.Adapter = listAdapter;
+            listAdapter.NotifyDataSetChanged();
         }
     }
 }
