@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Java.Lang;
+using Newtonsoft.Json;
 
 namespace Notebook
 {
@@ -77,7 +78,14 @@ namespace Notebook
 
         private void EditBtn_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var editBtnClicked = (ImageButton)sender;
+            int position = (int)editBtnClicked.Tag;
+
+            Intent editActivity = new Intent(context, typeof(EditActivity));
+            editActivity.PutExtra("Note", JsonConvert.SerializeObject(items[position]));
+            editActivity.PutExtra("NotePosition", position);
+            context.StartActivity(editActivity);
+            
         }
     }
 }

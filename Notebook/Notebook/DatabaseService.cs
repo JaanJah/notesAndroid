@@ -36,6 +36,11 @@ namespace Notebook
             }
         }
 
+        public void UpdateNote(Notes note)
+        {
+            db.Update(note);
+        }
+
         public void AddNote(string noteMsg)
         {
             var newNote = new Notes();
